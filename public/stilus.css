@@ -1,0 +1,54 @@
+*{
+    margin: auto;
+}
+
+main{
+    display: grid;
+    grid-template-areas: "h h h"
+                        "n n n"
+                        "ar ar ar"
+                        "f f f";
+}
+
+header{
+    grid-area: h;
+}
+
+nav{
+    grid-area: n;
+}
+
+article{
+    grid-area: ar;
+}
+
+footer{
+    grid-area: f;
+}
+
+nav li{
+    display: inline-block;
+    list-style-type: none;
+    
+}
+
+nav a{
+    text-decoration: none;
+    color: lavenderblush;
+}
+
+header, aside, nav, footer{
+    background-color: rgb(57, 179, 196);
+    color: lavenderblush;
+    width: 100%;
+    text-align: center;
+}
+
+article{
+    color: rgb(57, 179, 196);
+}
+
+button{
+    background-color: aliceblue;
+    border: none;
+}

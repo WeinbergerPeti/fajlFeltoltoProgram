@@ -3,78 +3,96 @@ import FajlKivalasztView from "./FajlKivalasztView.js";
 class fajlNevek {
 
     #ujFajl;
-    #fajlNevekTomb = [];
+    #tomb = [];
 
     constructor(szuloElem) {
+
         this.fajlElem = $("#fajlfeltoltes")
         this.#ujFajl = new FajlKivalasztView(this.fajlElem);
         this.divElem = szuloElem
         this.fajlElem = this.divElem.children("last-child");
-        //this.fajlNevekTomb = this.uploadFiles();
-        console.log(this.#fajlNevekTomb)
-        
-        this.fajlnev();
         
         $("#kuldgomb").on("click", ()=>
         {
             console.log("katt");
-            // this.uploadFiles();
+            console.log(this.#tomb);
+            
             this.esemenyTrigger("kuldes");
         })
+
+        $('#myfile').on('change', (event) => 
+        {
+            this.fajl(event);
+        });
+        
+        console.log(this.#tomb);
+        
     }
 
+    FajlHozzaad(fajlNev, kod) 
+    {
+        console.log(fajlNev, kod);
 
-    uploadFiles() {
-        const fileInput = this.divElem.children("#fileInput");
-        this.#fajlNevekTomb = fileInput.files;
-        console.log(this.#fajlNevekTomb)
-    }
+        // Két azonos kóddal lévő dokumentum nem tölthető fel.
+        /**--------------------------- */
+        let adat = {fajlNev: fajlNev, kod: kod};
 
-    getNev() {
-        return this.#fajlNevekTomb;
-    }
-
-    fajlnev() {
-        $("#myfile").change((event) => {
-            console.log(event.target.files[0].name)
-            let fajlneve = (event.target.files[0].name)
-            const feldolgozottFajl = fajlneve.split(' ')
-            console.log(fajlneve)
-            let kod = "";
-            //ez végig fut a keletkezett tömbön, ami a 'feldolgozottFajl'
-            for (let index = 0; index < feldolgozottFajl.length; index++) {
-                //itt megnézi, hogy az adott elem tartalmazza-e a karaktert
-                //bízunk benne, hogy mindenkinek az egyedi kódja lesz csak zárójelben :D
-                if (feldolgozottFajl[index].indexOf("(") > -1) {
-                    console.log(feldolgozottFajl[index])
-                    //slice-al levesszük a zárójelet miután megtaláltuk
-                    kod += feldolgozottFajl[index].slice(1, -1)
-                    // jovedelemkifizeteslap - Vezeteknev Keresztnev (32541) 20240203_324.pdf
-                }
-
+        for (let i = 0; i < this.#tomb.length; i++) {
+            if (this.#tomb[i].kod === adat.kod) {
+                // Ha az adott kod már szerepel a tömbben, kilépünk a ciklusból
+                return;
             }
-            $("#fajlnevKiir").text(fajlneve)
-            //push-t append-et nem ismeri fel
-            this.#fajlNevekTomb.push(fajlneve);
-            console.log(fajlneve)
-            console.log(kod)
-            console.log(this.#fajlNevekTomb)
-            $("#kiiras").text(kod)
-            this.#fajlNevekTomb.push(kod);
+        }
+        
+        // Ha a ciklus végére értünk, és az adott kod még nem szerepel a tömbben, hozzáadjuk az adatot
+        this.#tomb.push(adat);
+        /**----------------------------- */
 
-        })
-    
-
+        // this.#tomb.push({fajlNev: fajlNev, kod: kod});
     }
 
+    fajl(event)
+    {
+        let fajl = event.target.files; // Az input elem által kiválasztott fájlok lekérése
+
+        // console.log(fajl);
+        
+        if (fajl.length > 0) {
+            
+            for (var i = 0; i < fajl.length; i++) 
+            {
+
+                // console.log("Fájlnév: " + fajl[i].name);
+                // console.log("Méret: " + fajl[i].size + " bytes");
+                // console.log("Típus: " + fajl[i].type);
 
 
+                let fajlneve = fajl[i].name; // Fájlnév
 
-
+                let kod = "";
+                if (fajlneve.indexOf("(") > -1) 
+                {
+                    let feldolgozottFajl = fajlneve.split(' '); 
+                    for (let j = 0; j < feldolgozottFajl.length; j++) 
+                    {
+                        if (feldolgozottFajl[j].indexOf("(") > -1) 
+                        {
+                            kod = feldolgozottFajl[j].slice(1, -1); 
+                        }
+                    }
+                }
+                this.FajlHozzaad(fajl[i].name, kod)
+            }
+        }
+        else 
+        {
+            console.log("Nincs fájl kiválasztva.");
+        }
+    }
 
     esemenyTrigger(esemenyneve) 
     {
-        window.dispatchEvent(new CustomEvent(esemenyneve, { detail: this.#fajlNevekTomb }));
+        window.dispatchEvent(new CustomEvent(esemenyneve, { detail: this.#tomb }));
     }
 }
 

@@ -33,12 +33,21 @@ class Controller {
 
         $(window).on("kuldes", (event) => 
         {
-            console.log("küldés");
+            // console.log("küldés");
+            // console.log(event.detail);
 
-            console.log(event.detail);
-            $("#tablazatKiir").html(event.detail);
+            $("#tablazatKiir").html("");
 
-            this.dataService.postAxiosData(ALAPVEGPONT, event.detail);
+            for (let i = 0; i < event.detail.length; i++) 
+            {
+                $("#tablazatKiir").append(event.detail[i].fajlNev, event.detail[i].kod);
+            }
+
+
+
+            
+        })
+            // this.dataService.postAxiosData(ALAPVEGPONT, event.detail);
 
 
 
@@ -50,7 +59,6 @@ class Controller {
             // this.fajlNevek.getNev();
             // console.log(this.fajlNevek.getNev());
             // FajlNevek.getNev();
-        })
     }
 }
 

@@ -38,9 +38,9 @@
                 Ide kerül a fájl neve....
             </div>
             
-            <!-- <div id="tablazatKiir">
+            <div id="tablazatKiir">
                 Ide kerül a táblázat a több fájlnévvel...
-            </div> -->
+            </div>
            
         </article>
         <footer>Minden jog fenntartva</footer>

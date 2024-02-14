@@ -1,7 +1,51 @@
 class DataService {
-    constructor() {
-
+    constructor(token) {
+        this.token = token;
     }
+
+    fajlokKuldes(vegpont, adat) 
+    {
+        return fetch(vegpont, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': this.token,
+            },
+            body: JSON.stringify(adat)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        });
+    }
+    
+
+    adatUj(vegpont, adat) {
+        fetch(vegpont,
+            {
+                method: "POST",
+                body: JSON.stringify(adat),
+                headers:
+                {
+                    "content-type": "application/json",
+                    "X-CSRF-TOKEN": this.token,
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Sikeres adatfelvitel" + data);
+            })
+            .catch((error) => {
+                console.error("Error", error);
+            });
+    }
+
+    
+
+
+
 
     getAxiosData(url, callback) {
         console.log(url)

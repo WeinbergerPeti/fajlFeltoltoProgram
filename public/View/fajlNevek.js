@@ -46,6 +46,7 @@ class fajlNevek {
         
         // Ha a ciklus végére értünk, és az adott kod még nem szerepel a tömbben, hozzáadjuk az adatot
         this.#tomb.push(adat);
+        console.log(this.#tomb);
         /**----------------------------- */
 
         // this.#tomb.push({fajlNev: fajlNev, kod: kod});

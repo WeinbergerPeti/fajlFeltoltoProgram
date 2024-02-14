@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content=<?php $token = csrf_token(); echo $token;?>>
     <title>Email küldő szolgáltatás</title>
 
     <!-- Komment -->
@@ -19,9 +20,9 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <!-- Saját Javascript -->
-    <script type="module" src="main.js"></script>
+    <script type="module" src="../main.js"></script>
     <!-- Saját css -->
-    <link rel="stylesheet" href="stilus.css">
+    <link rel="stylesheet" href="../css/stilus.css">
 </head>
 
 <body>

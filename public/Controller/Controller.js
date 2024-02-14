@@ -31,10 +31,13 @@ class Controller {
          * gombra
          */
 
+        const token = $(`meta[name="csrf-token"]`).attr("content");
+        const AdatFeldolgozModel = new DataService(token);
+
         $(window).on("kuldes", (event) => 
         {
             // console.log("küldés");
-            // console.log(event.detail);
+            console.log(event.detail);
 
             $("#tablazatKiir").html("");
 
@@ -42,11 +45,16 @@ class Controller {
             {
                 $("#tablazatKiir").append(event.detail[i].fajlNev, event.detail[i].kod);
             }
+            // AdatFeldolgozModel.adatUj("/fajl_kuldes", event.detail);
+            // AdatFeldolgozModel.adatUj("/api/email_pdfel", event.detail);
+            // AdatFeldolgozModel.adatUj("/fajl_kimentes", event.detail);
 
-
-
-            
         })
+
+        
+
+
+
             // this.dataService.postAxiosData(ALAPVEGPONT, event.detail);
 
 

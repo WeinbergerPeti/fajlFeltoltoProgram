@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FajlEmailController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentMailController;
 use App\Mail\StudentEmail;
@@ -21,6 +22,21 @@ Route::get('/', function () {
     // return view('welcome');
     return view('index');
 });
+
+
+Route::get('/fajl_kuldes', [FajlEmailController::class], "fajlKuldes");
+Route::get('/kuldes', [FajlEmailController::class], "kuldes");
+
+Route::post('/fajl_kimentes', [FajlEmailController::class, 'fajlokKimentese']);
+
+
+
+
+
+
+
+
+
 //Email küldéshez kellő útvonalak
 Route::get('send_mail', [StudentMailController::class, 'index']);
 Route::get('api/email_pdfel', [StudentMailController::class, 'emailPdfel']);

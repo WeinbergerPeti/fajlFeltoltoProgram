@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DemoMail;
+use App\Mail\FajlEmail;
 use App\Mail\StudentEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,8 @@ class StudentMailController extends Controller
     public function emailPdfel()
     {
         //$jsonFilePath = $mappa;//kuldestSegito -> itt lesz a json file ami a kiküldéshez kell
-        $jsonFilePath = storage_path('app/jsonScriptek/mailSenderData_2024-01-26_19-52.json'); //
+        // $jsonFilePath = storage_path('app/jsonScriptek/mailSenderData_2024-01-26_19-52.json');
+        $jsonFilePath = storage_path('app/jsonScriptek/mailFajlok_2024-02-07_17-59.json');
         //mailSenderData_2024-01-26_18-56
         //studentEmailData_2024-01-26_15-54
 
@@ -47,7 +49,7 @@ class StudentMailController extends Controller
                 //print($mailData[$db]);
                 //print($mailData['path'] . '/' . $mailData['pdf_name']);
 
-                Mail::to($email->email)->send(new StudentEmail($mailData)); //, $pdfAdatok
+                Mail::to($email->email)->send(new FajlEmail($mailData)); //, $pdfAdatok
 
                 $db += 1;
             }
